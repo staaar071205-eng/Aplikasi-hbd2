@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday Bunda 🌸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Tenor+Sans&family=Great+Vibes&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════
+   ROOT PALETTE — Sage · Cream · Dusty Rose · Gold
+═══════════════════════════════════════════ */
+:root{
+  --sage:        #8faa8b;
+  --sage-light:  #b5c9b1;
+  --sage-deep:   #6b8b66;
+  --sage-pale:   #e8f0e6;
+  --cream:       #faf7f2;
+  --cream-warm:  #f5efe4;
+  --cream-deep:  #ede3d3;
+  --ivory:       #fffef9;
+  --rose:        #d4a5a0;
+  --rose-pale:   #f2e4e1;
+  --gold:        #c9a96e;
+  --gold-light:  #dfc08a;
+  --gold-pale:   rgba(201,169,110,.18);
+  --gold-glow:   rgba(201,169,110,.28);
+  --brown:       #7a5c40;
+  --brown-deep:  #4e3520;
+  --text-main:   #3d2f20;
+  --text-soft:   #7a6650;
+  --text-mute:   #a08c78;
+  --shadow-sm:   0 4px 20px rgba(100,70,40,.10);
+  --shadow-md:   0 12px 50px rgba(80,55,30,.16);
+  --shadow-lg:   0 30px 90px rgba(60,40,20,.22);
+  --glass:       rgba(255,254,249,.60);
+  --glass-b:     rgba(201,169,110,.15);
+
+  /* Theater */
+  --theater-bg:  #0d0a06;
+  --theater-rib: rgba(201,169,110,.06);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  background:var(--cream);
+  color:var(--text-main);
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+/* ═══ CANVAS ═══ */
+#canvas{
+  position:fixed;inset:0;
+  pointer-events:none;z-index:0;
+  opacity:.7;
+}
+
+/* ═══ SCROLLBAR ═══ */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--cream-warm);}
+::-webkit-scrollbar-thumb{background:var(--sage-light);border-radius:3px;}
+
+/* ══════════════════════════════════════════
+   OPENING SCREEN
+══════════════════════════════════════════ */
+#opening{
+  position:fixed;inset:0;z-index:2000;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  transition:opacity 1.4s cubic-bezier(.4,0,.2,1),visibility 1.4s;
+}
+#opening.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+
+/* layered background */
+.op-bg{
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)),
+    url('Foto\ Bunda.jpeg') center center / cover no-repeat;
+
+  filter:brightness(1);
+}
+
+/* botanical svg overlay */
+.op-botanical{
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='60' cy='60' r='40' fill='none' stroke='%238faa8b' stroke-width='.4' opacity='.3'/%3E%3Ccircle cx='540' cy='540' r='60' fill='none' stroke='%238faa8b' stroke-width='.4' opacity='.3'/%3E%3Cpath d='M0 300 Q150 200 300 300 Q450 400 600 300' fill='none' stroke='%23c9a96e' stroke-width='.5' opacity='.2'/%3E%3C/svg%3E");
+  background-size:600px;
+  opacity:.6;
+  pointer-events:none;
+}
+
+/* corner frames */
+.op-frame{position:absolute;width:80px;height:80px;}
+.op-frame.tl{top:24px;left:24px;border-top:1px solid var(--gold);border-left:1px solid var(--gold);opacity:.5;}
+.op-frame.tr{top:24px;right:24px;border-top:1px solid var(--gold);border-right:1px solid var(--gold);opacity:.5;}
+.op-frame.bl{bottom:24px;left:24px;border-bottom:1px solid var(--gold);border-left:1px solid var(--gold);opacity:.5;}
+.op-frame.br{bottom:24px;right:24px;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold);opacity:.5;}
+
+/* floating petals */
+.petal{
+  position:absolute;font-size:1.4rem;
+  animation:petalFloat var(--dur,8s) ease-in-out infinite var(--delay,0s);
+  opacity:.35;pointer-events:none;
+}
+@keyframes petalFloat{
+  0%,100%{transform:translate(0,0) rotate(0deg);}
+  33%{transform:translate(15px,-20px) rotate(12deg);}
+  66%{transform:translate(-10px,10px) rotate(-8deg);}
+}
+
+/* content */
+.op-content{
+  position:relative;z-index:2;
+  text-align:center;
+  opacity:0;
+  animation:opReveal 1.8s cubic-bezier(.25,.8,.25,1) .4s forwards;
+  padding: 40px;
+border-radius: 25px;
+backdrop-filter: blur(2px);
+background: rgba(255,255,255,0.03);
+border: 1px solid rgba(255,255,255,0.08);
+}
+@keyframes opReveal{
+  from{opacity:0;transform:translateY(40px) scale(.97);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.op-eyebrow{
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.62rem;letter-spacing:.55em;text-transform:uppercase;
+  color:var(--sage-deep);margin-bottom:1.8rem;
+  opacity:0;animation:opReveal 1.5s ease 1s forwards;
+}
+.op-script{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(3.5rem,10vw,7.5rem);
+  color:var(--brown-deep);
+  line-height:1;margin-bottom:.4rem;
+  text-shadow:0 4px 40px rgba(201,169,110,.3);
+}
+.op-serif{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-weight:500;
+  font-size:clamp(.9rem,2.5vw,1.4rem);
+
+  color:#ffffff;
+
+  letter-spacing:.12em;
+  margin-bottom:2.4rem;
+
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.7),
+    0 4px 20px rgba(0,0,0,.6),
+    0 0 30px rgba(0,0,0,.5);
+
+  opacity:0;
+  animation:opReveal 1.5s ease 1.2s forwards;
+}
+.op-rule{
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;margin-bottom:2.8rem;
+  opacity:0;animation:opReveal 1.5s ease 1.4s forwards;
+}
+.op-rule-line{height:1px;width:90px;background:linear-gradient(to right,transparent,var(--gold));}
+.op-rule-line:last-child{background:linear-gradient(to left,transparent,var(--gold));}
+.op-rule-gem{color:var(--gold);font-size:.9rem;}
+
+.op-btn{
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;
+  padding:1.1rem 3rem;border:none;border-radius:60px;
+  cursor:pointer;position:relative;overflow:hidden;
+  background:linear-gradient(135deg, var(--sage-deep) 0%, var(--sage) 50%, var(--gold) 100%);
+  color:#fff;
+  box-shadow:0 8px 35px rgba(107,139,102,.35), 0 0 25px var(--gold-glow);
+  transition:transform .35s ease, box-shadow .35s ease;
+  opacity:0;animation:opReveal 1.5s ease 1.7s forwards;
+}
+.op-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg, var(--gold) 0%, var(--sage) 100%);
+  opacity:0;transition:opacity .35s;
+}
+.op-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 50px rgba(107,139,102,.45), 0 0 40px var(--gold-glow);}
+.op-btn:hover::before{opacity:1;}
+.op-btn span{position:relative;z-index:1;}
+
+/* ══════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════ */
+#main{opacity:0;transition:opacity 1.6s ease;}
+#main.show{opacity:1;}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:7rem 2rem 5rem;
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 45%, rgba(143,170,139,.15) 0%, transparent 70%),
+    linear-gradient(180deg, var(--ivory) 0%, var(--cream) 60%, var(--cream-warm) 100%);
+  z-index:1;
+}
+.hero-pulse{
+  position:absolute;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle, rgba(143,170,139,.12) 0%, transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:pulse 5s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes pulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7;}
+  50%{transform:translate(-50%,-50%) scale(1.12);opacity:1;}
+}
+
+.tag{
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--sage-deep);margin-bottom:1.6rem;
+  display:flex;align-items:center;gap:10px;
+}
+.tag::before,.tag::after{content:'';display:block;height:1px;width:50px;background:var(--sage-light);}
+
+.hero-script{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(3.2rem,11vw,8rem);
+  color:var(--brown-deep);
+  text-align:center;line-height:1;
+  margin-bottom:.5rem;
+  text-shadow:0 4px 50px rgba(201,169,110,.25);
+}
+.hero-serif{
+  font-family:'Playfair Display',serif;
+  font-style:italic;font-weight:400;
+  font-size:clamp(1rem,2.8vw,1.5rem);
+  color:var(--text-soft);letter-spacing:.1em;
+  text-align:center;margin-bottom:2.5rem;
+}
+.hero-florals{
+  display:flex;gap:.6rem;font-size:1.5rem;
+  margin-bottom:1rem;
+}
+.hero-floral{animation:floatF 3.5s ease-in-out infinite;}
+.hero-floral:nth-child(2){animation-delay:.6s;}
+.hero-floral:nth-child(3){animation-delay:1.2s;}
+.hero-floral:nth-child(4){animation-delay:.3s;}
+.hero-floral:nth-child(5){animation-delay:.9s;}
+@keyframes floatF{
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-10px) rotate(6deg);}
+}
+
+.scroll-cue{
+  position:absolute;bottom:36px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  animation:fadeIn 2s ease 3s forwards;opacity:0;
+}
+@keyframes fadeIn{to{opacity:.55;}}
+.scroll-cue-dot{
+  width:5px;height:5px;border-radius:50%;background:var(--sage);
+  animation:scrollBounce 1.8s ease-in-out infinite;
+}
+@keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:.4;}50%{transform:translateY(10px);opacity:1;}}
+.scroll-cue-text{font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:var(--sage-deep);}
+
+/* ══════════════════════════════════════════
+   SECTION COMMONS
+══════════════════════════════════════════ */
+.sec{
+  padding:7rem 2rem;
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;z-index:1;
+}
+.sec-eyebrow{
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--sage-deep);margin-bottom:.9rem;
+}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:500;
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  color:var(--brown-deep);text-align:center;
+  margin-bottom:.5rem;
+}
+.sec-sub{
+  font-family:'DM Sans',sans-serif;font-weight:300;
+  font-size:.82rem;color:var(--text-mute);letter-spacing:.06em;
+  text-align:center;margin-bottom:3.5rem;
+}
+
+/* ══════════════════════════════════════════
+   ★ CINEMA SECTION ★
+══════════════════════════════════════════ */
+.cinema-sec{
+  background:
+    linear-gradient(180deg, var(--cream-warm) 0%, var(--cream-deep) 40%, var(--cream-warm) 100%);
+  padding:7rem 1.5rem 8rem;
+}
+
+/* Entire theater wrapper */
+.theater-outer{
+  width:100%;max-width:1000px;position:relative;
+}
+
+/* Seat arc decoration on top */
+.curtain-top{
+  width:100%;height:48px;
+  display:flex;justify-content:center;
+  margin-bottom:-2px;position:relative;z-index:3;
+}
+.curtain-top svg{width:100%;height:100%;}
+
+/* Pillar lights */
+.pillar-wrap{
+  display:flex;gap:0;position:relative;
+}
+.pillar{
+  width:28px;flex-shrink:0;
+  background:linear-gradient(180deg, #1a1208, #0d0a04, #1a1208);
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;
+  padding:8px 0;gap:14px;
+}
+.pillar-light{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold-light);
+  box-shadow:0 0 8px 3px rgba(223,192,138,.6);
+  animation:pillarPulse 2.5s ease-in-out infinite;
+}
+.pillar:last-child .pillar-light{animation-delay:.4s;}
+@keyframes pillarPulse{0%,100%{opacity:.6;transform:scale(1);}50%{opacity:1;transform:scale(1.3);}}
+
+/* Main screen container */
+.theater-mid{flex:1;position:relative;}
+
+/* Top valance / curtain banner */
+.valance{
+  background:linear-gradient(135deg, #1e1408 0%, #2a1c0a 50%, #1e1408 100%);
+  height:44px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  border-bottom:1px solid rgba(201,169,110,.2);
+}
+.valance::before,.valance::after{
+  content:'';position:absolute;bottom:-1px;
+  width:30px;height:6px;
+  background:rgba(201,169,110,.25);
+  border-radius:0 0 4px 4px;
+}
+.valance::before{left:10%;}
+.valance::after{right:10%;}
+
+.valance-text{
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.58rem;letter-spacing:.45em;text-transform:uppercase;
+  color:var(--gold-light);opacity:.8;
+}
+.valance-gem{color:var(--gold);margin:0 8px;font-size:.7rem;}
+
+/* Screen bezel */
+.screen-bezel{
+  background:linear-gradient(180deg, #100c05 0%, #0d0a04 100%);
+  padding:8px 8px 0;
+  position:relative;
+}
+
+/* Actual screen */
+.screen{
+  aspect-ratio:16/9;
+  position:relative;
+  background:#0d0a04;
+  overflow:hidden;
+  border-radius:4px 4px 0 0;
+  cursor:pointer;
+}
+
+/* video element */
+#theater-video{
+  width:100%;height:100%;object-fit:cover;
+  display:block;position:absolute;inset:0;
+  z-index:1;
+}
+
+/* placeholder shown when no video */
+.screen-placeholder{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(30,20,8,.0) 0%, transparent 70%),
+    linear-gradient(135deg, #1a1208 0%, #0d0a04 50%, #1a1208 100%);
+  text-align:center;gap:14px;z-index:2;
+  transition:opacity .5s ease;
+}
+.screen-placeholder.hidden{opacity:0;pointer-events:none;z-index:-1; display:none; }
+.ph-flower{font-size:2.8rem;opacity:.4;animation:floatF 4s ease-in-out infinite;}
+.ph-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(1.8rem,4vw,3rem);
+  color:rgba(223,192,138,.5);
+}
+.ph-sub{
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;
+  color:rgba(201,169,110,.3);
+}
+.ph-upload-btn{
+  margin-top:8px;
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;
+  padding:.7rem 1.8rem;border-radius:40px;border:none;cursor:pointer;
+  background:rgba(201,169,110,.15);
+  color:rgba(223,192,138,.7);
+  border:1px solid rgba(201,169,110,.2);
+  transition:all .3s;
+}
+.ph-upload-btn:hover{background:rgba(201,169,110,.25);color:var(--gold-light);}
+
+/* cinematic vignette */
+.screen-vignette{
+  position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:
+    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 50%, rgba(5,3,1,.55) 100%),
+    linear-gradient(to bottom, rgba(5,3,1,.15) 0%, transparent 15%, transparent 85%, rgba(5,3,1,.25) 100%);
+}
+
+/* OVERLAY CONTROLS */
+.video-overlay{
+  position:absolute;inset:0;z-index:5;
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+  background:linear-gradient(to top, rgba(10,7,2,.85) 0%, rgba(10,7,2,.3) 30%, transparent 60%);
+  opacity:0;
+  transition:opacity .35s ease;
+  border-radius:4px 4px 0 0;
+}
+.screen:hover .video-overlay{opacity:1;}
+
+/* big play button in center */
+.big-play{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(.85);
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(255,254,249,.15);
+  border:1.5px solid rgba(255,254,249,.3);
+  backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:transform .3s ease, background .3s;
+  color:#fff;font-size:1.6rem;
+}
+.big-play:hover{transform:translate(-50%,-50%) scale(1);background:rgba(255,254,249,.22);}
+.big-play.playing{opacity:0;}
+.screen:hover .big-play.playing{opacity:1;}
+
+/* bottom control bar */
+.ctrl-bar{
+  padding:.8rem 1.2rem 1.1rem;
+  display:flex;flex-direction:column;gap:8px;
+}
+.ctrl-progress{
+  width:100%;height:3px;
+  background:rgba(255,255,255,.2);
+  border-radius:2px;cursor:pointer;position:relative;
+}
+.ctrl-fill{
+  height:100%;width:0%;
+  background:linear-gradient(to right, var(--sage-light), var(--gold-light));
+  border-radius:2px;
+  transition:width .15s linear;
+}
+.ctrl-fill-thumb{
+  position:absolute;top:50%;right:0;
+  width:11px;height:11px;border-radius:50%;
+  background:var(--gold-light);
+  transform:translate(50%,-50%);
+  box-shadow:0 0 8px rgba(223,192,138,.6);
+  transition:right .15s linear;
+}
+.ctrl-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.ctrl-left,.ctrl-right{display:flex;align-items:center;gap:10px;}
+.cv-btn{
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.8);
+  font-size:1rem;transition:color .2s,transform .2s;
+  display:flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:50%;
+}
+.cv-btn:hover{color:#fff;transform:scale(1.15);}
+.cv-btn.main-play{
+  width:40px;height:40px;font-size:1.2rem;
+  background:rgba(255,255,255,.12);
+  border-radius:50%;
+}
+.cv-time{
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.65rem;letter-spacing:.08em;
+  color:rgba(255,255,255,.7);
+}
+.cv-vol-wrap{display:flex;align-items:center;gap:6px;}
+.cv-vol-slider{
+  -webkit-appearance:none;appearance:none;
+  width:60px;height:3px;border-radius:2px;
+  background:rgba(255,255,255,.25);cursor:pointer;outline:none;
+}
+.cv-vol-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:11px;height:11px;border-radius:50%;
+  background:var(--gold-light);cursor:pointer;
+}
+.fullscreen-icon{font-size:.9rem;}
+
+/* bottom stage */
+.stage-bottom{
+  background:linear-gradient(180deg, #100c05, #1a1208);
+  height:28px;
+  display:flex;align-items:center;justify-content:center;
+  gap:16px;
+  border-top:1px solid rgba(201,169,110,.12);
+  border-radius:0 0 8px 8px;
+}
+.stage-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(201,169,110,.25);
+  box-shadow:0 0 6px 2px rgba(201,169,110,.15);
+}
+
+/* ambient glow around theater */
+.theater-glow{
+  position:absolute;
+  inset:-40px;
+  border-radius:30px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(143,170,139,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 30% 80%, rgba(201,169,110,.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 70% 20%, rgba(201,169,110,.10) 0%, transparent 60%);
+  animation:theaterGlow 4s ease-in-out infinite;
+  pointer-events:none;z-index:-1;
+}
+@keyframes theaterGlow{
+  0%,100%{opacity:.7;}
+  50%{opacity:1;}
+}
+
+/* Floor reflection */
+.floor-reflect{
+  width:calc(100% - 56px);
+  height:30px;
+  background:linear-gradient(to bottom, rgba(143,170,139,.06) 0%, transparent 100%);
+  margin:0 28px;
+  filter:blur(4px);
+}
+
+/* File input hidden */
+#video-file-input{display:none;}
+
+/* ══════════════════════════════════════════
+   MESSAGE SECTION
+══════════════════════════════════════════ */
+.message-sec{
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 30%, rgba(181,201,177,.12) 0%, transparent 65%),
+    linear-gradient(180deg, var(--cream-warm) 0%, var(--ivory) 50%, var(--cream-warm) 100%);
+}
+
+.msg-card{
+  max-width:740px;width:100%;
+  background:var(--glass);
+  border:1px solid var(--glass-b);
+  border-radius:28px;
+  padding:clamp(2rem,5vw,4.5rem);
+  backdrop-filter:blur(24px);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 1px 0 rgba(255,255,255,.7),
+    inset 0 -1px 0 rgba(201,169,110,.08);
+  position:relative;overflow:hidden;
+}
+.msg-card::before{
+  content:'\201C';
+  position:absolute;top:-30px;left:24px;
+  font-family:'Great Vibes',cursive;
+  font-size:11rem;color:var(--sage-light);opacity:.12;
+  line-height:1;pointer-events:none;
+}
+.msg-card::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg, var(--sage-light), var(--gold), var(--rose), var(--gold), var(--sage-light));
+  border-radius:0 0 28px 28px;
+  opacity:.6;
+}
+.msg-body{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(.95rem,2.2vw,1.18rem);
+  line-height:2;color:var(--text-main);
+  font-weight:400;
+}
+.msg-body p{margin-bottom:1.5rem;}
+.msg-body p:last-child{margin-bottom:0;}
+.msg-body em{font-style:italic;color:var(--sage-deep);}
+.msg-body strong{color:var(--brown);font-weight:500;}
+.msg-sig{
+  margin-top:2rem;padding-top:1.5rem;
+  border-top:1px solid rgba(201,169,110,.15);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.sig-name{
+  font-family:'Great Vibes',cursive;
+  font-size:2rem;color:var(--sage-deep);
+}
+.sig-dec{font-size:1rem;letter-spacing:.3em;}
+
+/* ══════════════════════════════════════════
+   AUDIO SECTION
+══════════════════════════════════════════ */
+.audio-sec{
+  background:linear-gradient(180deg, var(--ivory) 0%, var(--sage-pale) 100%);
+}
+.audio-card{
+  max-width:580px;width:100%;
+  background:var(--glass);
+  border:1px solid var(--glass-b);
+  border-radius:28px;
+  padding:2.5rem;
+  backdrop-filter:blur(20px);
+  box-shadow:var(--shadow-md);
+}
+.audio-head{text-align:center;margin-bottom:2rem;}
+.audio-emoji{font-size:2.2rem;margin-bottom:.5rem;display:block;}
+.audio-title{
+  font-family:'Playfair Display',serif;font-size:1.25rem;
+  color:var(--brown-deep);margin-bottom:.3rem;
+}
+.audio-sub{
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--sage-deep);
+}
+
+/* viz */
+.viz{
+  height:56px;display:flex;align-items:center;
+  justify-content:center;gap:2.5px;
+  background:rgba(143,170,139,.08);
+  border-radius:14px;padding:0 1rem;
+  margin-bottom:1.5rem;overflow:hidden;
+}
+.vb{
+  width:2.5px;border-radius:2px;
+  background:linear-gradient(to top, var(--sage-deep), var(--sage-light), var(--gold-light));
+  height:6px;opacity:.4;
+  transition:height .08s ease;
+}
+.vb.on{opacity:.9;}
+
+/* progress */
+.ap-prog{
+  width:100%;height:4px;border-radius:2px;
+  background:rgba(143,170,139,.2);
+  cursor:pointer;position:relative;margin-bottom:.4rem;
+  overflow:hidden;
+}
+.ap-fill{
+  height:100%;width:0%;border-radius:2px;
+  background:linear-gradient(to right, var(--sage-deep), var(--gold));
+  transition:width .1s linear;
+}
+.ap-times{
+  display:flex;justify-content:space-between;
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.65rem;color:var(--text-mute);
+  margin-bottom:1.4rem;
+}
+.ap-controls{
+  display:flex;align-items:center;justify-content:center;gap:1.2rem;
+  margin-bottom:1rem;
+}
+.ap-btn{
+  background:none;border:none;cursor:pointer;
+  color:var(--sage-deep);font-size:1rem;
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .25s;
+}
+.ap-btn:hover{color:var(--gold);background:rgba(201,169,110,.08);transform:scale(1.1);}
+.ap-play{
+  width:56px;height:56px;font-size:1.3rem;
+  background:linear-gradient(135deg, var(--sage-deep), var(--gold));
+  color:#fff;border-radius:50%;
+  box-shadow:0 8px 28px rgba(107,139,102,.35), 0 0 18px rgba(201,169,110,.25);
+}
+.ap-play:hover{transform:scale(1.07)!important;box-shadow:0 12px 40px rgba(107,139,102,.45), 0 0 30px rgba(201,169,110,.35);}
+
+.audio-note{
+  text-align:center;font-family:'DM Sans',sans-serif;
+  font-size:.68rem;color:var(--text-mute);line-height:1.7;
+  padding-top:1rem;border-top:1px solid rgba(143,170,139,.15);
+}
+
+#audio-el{display:none;}
+
+/* ══════════════════════════════════════════
+   CLOSING SECTION
+══════════════════════════════════════════ */
+.closing-sec{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:7rem 2rem;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 50%, rgba(143,170,139,.14) 0%, transparent 65%),
+    linear-gradient(180deg, var(--sage-pale) 0%, var(--cream-warm) 50%, var(--ivory) 100%);
+  text-align:center;position:relative;z-index:1;overflow:hidden;
+}
+.closing-bg-text{
+  position:absolute;
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(8rem,20vw,16rem);
+  color:rgba(143,170,139,.05);
+  pointer-events:none;white-space:nowrap;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:0;
+}
+.closing-content{
+  position:relative;z-index:1;
+  opacity:0;transform:translateY(40px);
+  transition:opacity 1.2s ease, transform 1.2s ease;
+}
+.closing-content.show{opacity:1;transform:translateY(0);}
+.closing-icon{font-size:3rem;display:block;margin-bottom:1.2rem;}
+.closing-script{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(2.2rem,7vw,5rem);
+  color:var(--brown-deep);
+  text-shadow:0 4px 30px rgba(201,169,110,.25);
+  line-height:1.2;margin-bottom:1rem;
+}
+.closing-italic{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(.9rem,2.2vw,1.2rem);
+  color:var(--text-soft);max-width:520px;
+  line-height:1.9;margin:0 auto 2rem;
+}
+.closing-rule{
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;margin-bottom:1.5rem;
+}
+.closing-rule span{height:1px;width:70px;background:linear-gradient(to right,transparent,var(--gold));display:block;}
+.closing-rule span:last-child{background:linear-gradient(to left,transparent,var(--gold));}
+.closing-gem{color:var(--gold);}
+.closing-florals{font-size:1.4rem;letter-spacing:.4rem;margin-bottom:2rem;}
+.closing-stamp{
+  font-family:'Tenor Sans',sans-serif;
+  font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--text-mute);
+}
+
+/* ══════════════════════════════════════════
+   DIVIDERS
+══════════════════════════════════════════ */
+.divider{
+  display:flex;align-items:center;justify-content:center;
+  gap:16px;padding:1.5rem 0;opacity:.35;
+  position:relative;z-index:1;
+}
+.divider::before,.divider::after{
+  content:'';flex:1;max-width:180px;height:1px;
+  background:linear-gradient(to right,transparent,var(--sage-light));
+}
+.divider::after{background:linear-gradient(to left,transparent,var(--sage-light));}
+.divider-gem{color:var(--sage);font-size:.8rem;letter-spacing:.3em;}
+
+/* ══════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════ */
+.sr{opacity:0;transform:translateY(32px);transition:opacity .85s ease,transform .85s ease;}
+.sr.show{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.12s!important;}
+.d2{transition-delay:.24s!important;}
+.d3{transition-delay:.36s!important;}
+.d4{transition-delay:.48s!important;}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:768px){
+  .op-frame{width:50px;height:50px;}
+  .pillar{width:18px;}
+  .pillar-light{width:4px;height:4px;}
+  .valance{height:34px;}
+}
+@media(max-width:480px){
+  .op-frame{display:none;}
+  .cv-vol-wrap{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- Particle canvas -->
+<canvas id="canvas"></canvas>
+
+<!-- ═══════════════════════════════════
+     OPENING SCREEN
+═══════════════════════════════════ -->
+<div id="opening">
+  <div class="op-bg"></div>
+  <div class="op-botanical"></div>
+
+  <!-- corner frames -->
+  <div class="op-frame tl"></div>
+  <div class="op-frame tr"></div>
+  <div class="op-frame bl"></div>
+  <div class="op-frame br"></div>
+
+  <!-- floating petals -->
+  <span class="petal" style="top:8%;left:6%;--dur:9s;--delay:0s">🌸</span>
+  <span class="petal" style="top:15%;right:8%;--dur:7s;--delay:1s">🌷</span>
+  <span class="petal" style="bottom:12%;left:10%;--dur:11s;--delay:2s">✿</span>
+  <span class="petal" style="bottom:18%;right:6%;--dur:8s;--delay:.5s">🌺</span>
+  <span class="petal" style="top:50%;left:3%;--dur:10s;--delay:1.5s">🍃</span>
+  <span class="petal" style="top:40%;right:4%;--dur:6s;--delay:3s">🌸</span>
+
+  <div class="op-content">
+    <p class="op-eyebrow"> &nbsp; Sebuah Hadiah Spesial &nbsp; </p>
+    <h1 class="op-script">Happy Birthday</h1>
+    <p class="op-serif">My Beloved Mom — Bundaku Tercinta</p>
+    <div class="op-rule">
+      <span class="op-rule-line"></span>
+      <span class="op-rule-gem">🌸</span>
+      <span class="op-rule-line"></span>
+    </div>
+    <button class="op-btn" onclick="enterSite()"><span>Special For Bunda &nbsp;</span></button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════ -->
+<div id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-pulse"></div>
+    <p class="tag sr">Untuk Bunda Tercinta</p>
+    <h1 class="hero-script sr d1">Selamat Ulang Tahun</h1>
+    <p class="hero-serif sr d2">Bunda Hebat Kami yang paling istimewa &amp; paling Kami cintai</p>
+    <div class="hero-florals sr d3">
+      <span class="hero-floral">🌸</span>
+      <span class="hero-floral">🌷</span>
+      <span class="hero-floral">🌺</span>
+      <span class="hero-floral">🌹</span>
+      <span class="hero-floral">✿</span>
+    </div>
+    <div class="scroll-cue">
+      <div class="scroll-cue-dot"></div>
+      <span class="scroll-cue-text"></span>
+    </div>
+  </section>
+
+  <div class="divider"><span class="divider-gem"> &nbsp;  &nbsp; </span></div>
+
+  <!-- ═══ CINEMA SECTION ═══ -->
+  <section class="sec cinema-sec">
+    <p class="sec-eyebrow sr"> &nbsp; Cinema Spesial &nbsp; </p>
+    <h2 class="sec-title sr d1">Happy Watching Bunda</h2>
+    <p class="sec-sub sr d2">Selamat Menonton Tayangan Indah yang Penuh Cinta Bunda</p>
+
+    <div class="theater-outer sr d3">
+      <div class="theater-glow"></div>
+
+      <!-- Curtain arch -->
+      <div class="curtain-top">
+        <svg viewBox="0 0 900 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#1a1208"/>
+              <stop offset="25%" stop-color="#2d1c0a"/>
+              <stop offset="50%" stop-color="#1a1208"/>
+              <stop offset="75%" stop-color="#2d1c0a"/>
+              <stop offset="100%" stop-color="#1a1208"/>
+            </linearGradient>
+          </defs>
+          <!-- swag curtain shape -->
+          <path d="M0,0 Q112,48 225,20 Q337,0 450,28 Q562,48 675,20 Q787,0 900,28 L900,0 Z" fill="url(#cg)"/>
+          <!-- gold trim line -->
+          <path d="M0,0 Q112,48 225,20 Q337,0 450,28 Q562,48 675,20 Q787,0 900,28" fill="none" stroke="rgba(201,169,110,.35)" stroke-width="1"/>
+          <!-- hanging gems -->
+          <circle cx="225" cy="20" r="3" fill="rgba(201,169,110,.5)"/>
+          <circle cx="450" cy="28" r="3" fill="rgba(201,169,110,.5)"/>
+          <circle cx="675" cy="20" r="3" fill="rgba(201,169,110,.5)"/>
+        </svg>
+      </div>
+
+      <!-- Pillars + screen -->
+      <div class="pillar-wrap">
+
+        <!-- Left pillar -->
+        <div class="pillar">
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+        </div>
+
+        <!-- Center theater -->
+        <div class="theater-mid">
+          <!-- Valance banner -->
+          <div class="valance">
+            <span class="valance-gem"></span>
+            <span class="valance-text">Grand Premiere — For My Beloved Bunda</span>
+            <span class="valance-gem"></span>
+          </div>
+
+          <!-- Screen bezel -->
+          <div class="screen-bezel">
+            <div class="screen" id="screen" onclick="handleScreenClick()">
+
+              <!-- video element -->
+              <video id="theater-video"
+src="Video Bunda.mp4"
+preload="metadata"
+playsinline
+controls
+style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; z-index:1;">
+</video>
+
+              <!-- placeholder -->
+              <div class="screen-placeholder" id="screen-placeholder">
+                <div class="ph-flower">🎬</div>
+                <p class="ph-title">Video Ucapan Untuk Bunda 💖</p>
+                <p class="ph-sub">Klik tombol di bawah untuk memilih video dari komputer / hp</p>
+                <button class="ph-upload-btn" onclick="openFileDialog(event)">
+                  &nbsp;  Pilih Video  &nbsp; 
+                </button>
+              </div>
+
+              <!-- vignette -->
+              <div class="screen-vignette"></div>
+
+              <!-- overlay controls -->
+              <div class="video-overlay" id="video-overlay">
+                <button class="big-play" id="big-play-btn" onclick="toggleVideo(event)">▶</button>
+                <div class="ctrl-bar">
+                  <!-- progress -->
+                  <div class="ctrl-progress" id="ctrl-progress" onclick="seekVideo(event)">
+                    <div class="ctrl-fill" id="ctrl-fill"></div>
+                    <div class="ctrl-fill-thumb" id="ctrl-thumb"></div>
+                  </div>
+                  <!-- bottom row -->
+                  <div class="ctrl-bottom">
+                    <div class="ctrl-left">
+                      <button class="cv-btn main-play" id="cv-play-btn" onclick="toggleVideo(event)">▶</button>
+                      <div class="cv-vol-wrap">
+                        <button class="cv-btn" onclick="toggleMute(event)">🔊</button>
+                        <input class="cv-vol-slider" id="vol-slider" type="range" min="0" max="1" step=".05" value="1" oninput="setVolume(this.value)" onclick="stopProp(event)"/>
+                      </div>
+                      <span class="cv-time" id="cv-time">0:00 / 0:00</span>
+                    </div>
+                    <div class="ctrl-right">
+                      <button class="cv-btn fullscreen-icon" onclick="goFullscreen(event)" title="Fullscreen">⛶</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /screen -->
+          </div><!-- /bezel -->
+
+          <!-- Stage bottom -->
+          <div class="stage-bottom">
+            <div class="stage-dot"></div>
+            <div class="stage-dot"></div>
+            <div class="stage-dot"></div>
+            <div class="stage-dot"></div>
+            <div class="stage-dot"></div>
+          </div>
+        </div><!-- /theater-mid -->
+
+        <!-- Right pillar -->
+        <div class="pillar">
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+          <div class="pillar-light"></div>
+        </div>
+
+      </div><!-- /pillar-wrap -->
+
+      <div class="floor-reflect"></div>
+    </div><!-- /theater-outer -->
+
+    <!-- hidden file input -->
+    <input type="file" id="video-file-input" accept="video/*" onchange="loadVideoFile(event)"/>
+
+    <p style="margin-top:2rem;font-family:'Tenor Sans',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-mute);text-align:center;">
+
+    </p>
+
+  </section>
+
+  <div class="divider"><span class="divider-gem"> &nbsp;  &nbsp; </span></div>
+
+  <!-- MESSAGE SECTION -->
+  <section class="sec message-sec">
+    <p class="sec-eyebrow sr"> &nbsp; Dari Hati Anak Bunda &nbsp; </p>
+    <h2 class="sec-title sr d1">Pesan Untuk Bunda</h2>
+    <p class="sec-sub sr d2">Kata-kata yang selalu terasa kurang untuk mengungkapkan rasa ini</p>
+
+    <div class="msg-card sr d3">
+      <div class="msg-body">
+        <p>Entah bagaimana semesta mempertemukan Zaid dengan sosok sehangat bunda. Dulu, Zaid hanya mengenal bunda sebagai ibu dari seorang Finalis duta menulis perempuan hebat bernama Yara Salsabila. Perempuan yang sejak pertama kali hadir, membuat jantung ini lupa bagaimana caranya tenang. Dan beruntungnya zaid, dari pertemuan itu Allah tidak hanya mempertemukan cinta, tetapi juga menghadirkan sosok bunda yang kini zaid merasakan dekat layaknya ibu.
+Terimakasih bunda, Karena telah menerima zaid bukan sekadar sebagai orang lain, tetapi seperti anak sendiri. Terima kasih karena selalu menjadi pelita yang tetap menyala meski malam sedang panjang. Bunda adalah bentuk kasih yang lembut, dan juga kuat. Seperti hujan pertama setelah musim panjang yang kering. menenangkan, menghidupkan, dan membuat hati merasa pulang. 
+Kami selalu kagum pada cara bunda menyayangi. Dan lucunya lagi… di balik cara bunda menyampaikan sesuatu dengan (gigi 3) yang khas itu, selalu ada cinta yang tulus terselip di setiap katanya. Kadang kami tegang dan tertawa kecil, kadang hati kami justru menghangat karenanya. Sebab kami tahu, itu adalah bentuk kasih sayang bunda yang tidak dibuat-buat. Sederhana, tapi begitu membekas di hati.
+Kami tahu… dunia bunda tidak selalu tenang. Kadang hidup begitu berisik, memaksa pundak bunda memikul lelah yang tidak semua orang mampu pahami. Tapi hebatnya, bunda tetap berdiri seperti pohon besar yang akarnya menghujam kuat ke bumi. Tetap teduh, tetap bijaksana, tetap menjadi tempat berteduh bagi banyak hati yang lelah.
+Zaid, Yara, Aurel, dan Zema sayanggggg bunda selamanyaaaa. 
+Hidup lebih lama lagi ya bunda, Untuk bunda dan untuk kami anak anak bunda. Kami ingin melihat bunda terus tersenyum, terus sehat, terus bahagia dengan nikmat yang berlimpah dan penuh keberkahan. kami ingin mendengar arahan bunda, nasihat bunda, tawa bunda, bahkan omelan kecil bunda yang selalu berhasil membuat rumah terasa hidup.
+Semoga Allah selalu menjaga bunda dalam setiap langkah. Mengangkat segala lelah bunda menjadi pahala yang indah. Menggantikan setiap air mata bunda dengan kebahagiaan yang tak pernah putus. Dan semoga cinta yang bunda tanam hari ini, kembali kepada bunda berkali-kali lipat dalam bentuk kesehatan, umur panjang, ketenangan, dan keberkahan. AllahummaAamiin ya Allah.
+Dan sejauh apa pun waktu berjalan nanti, bunda akan selalu punya tempat paling lembut di hati kami.</strong></p>
+        <p><em>Zaid dan kami Sayang Bunda — hari ini, besok, dan selamanya. 🌸</em></p>
+      </div>
+      <div class="msg-sig">
+        <span class="sig-name">Anak bunda zaid dan kami yang selalu sayang bunda </span>
+        <span class="sig-dec">🌸 🌷 🌺</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span class="divider-gem"> &nbsp;  &nbsp; </span></div>
+
+  <!-- AUDIO SECTION -->
+  <section class="sec audio-sec">
+    <p class="sec-eyebrow sr"> &nbsp; Voice Note &nbsp; </p>
+    <h2 class="sec-title sr d1">Suara untuk Bunda</h2>
+    <p class="sec-sub sr d2">Bunda Hebat Kami❤️</p>
+
+    <audio id="Yara" src="voice-note1.mp4"></audio>
+    <audio id="Aurel" src="voice-note2.mp4"></audio>
+    <audio id="Zema" src="voice-note3.mp4"></audio>
+    <audio id="Zaid" src="voice-note4.mp4"></audio>
+
+    
+      <div class="audio-card sr d3">
+
+  <div class="audio-head">
+    <span class="audio-emoji">🎙️</span>
+    <p class="audio-title"> Suara kami Untuk Bunda</p>
+    <p class="audio-sub"> &nbsp; Anak-anak Bunda &nbsp; </p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:1rem;">
+
+    <!-- VN 1 -->
+    <div>
+      <p style="margin-bottom:.5rem;">🎧 Yara</p>
+      <audio controls style="width:100%;">
+        <source src="suara yara.mp4" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <!-- VN 2 -->
+    <div>
+      <p style="margin-bottom:.5rem;">🎧 Aurel</p>
+      <audio controls style="width:100%;">
+        <source src="suara aurel.mp4" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <!-- VN 3 -->
+    <div>
+      <p style="margin-bottom:.5rem;">🎧 Zema</p>
+      <audio controls style="width:100%;">
+        <source src="suara zema.mp4" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <!-- VN 4 -->
+    <div>
+      <p style="margin-bottom:.5rem;">🎧 Zaid</p>
+      <audio controls style="width:100%;">
+        <source src="suara zaid.mp4" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+  <!-- CLOSING -->
+  <section class="closing-sec">
+    <div class="closing-bg-text">Bunda</div>
+    <div class="closing-content sr">
+      <span class="closing-icon">🌸</span>
+      <p class="sec-eyebrow" style="margin-bottom:1rem;"> &nbsp; Penutup &nbsp; </p>
+      <h2 class="closing-script">Terima kasih Bunda sudah menjadi<br/>ibu terbaik dalam hidup kami</h2>
+      <p class="closing-italic">
+        Tidak ada hadiah di dunia ini yang setara dengan kehadiran sayang dan cintanya bunda.<br/>
+        Kami semua sayang bunda❤️
+        <br/><br/>
+        <em>Selamat 44 tahun Bunda. Panjang umur,<br/>dan selalu dikelilingi cinta❤️</em>
+      </p>
+      <div class="closing-rule">
+        <span></span>
+        <span class="closing-gem"></span>
+        <span></span>
+      </div>
+      <div class="closing-florals">🌸 🌷 🌺 🌹 🌷 🌸</div>
+      <p class="closing-stamp">With Love &nbsp;·&nbsp;Forever &amp;Always &nbsp;·&nbsp; </p>
+    </div>
+  </section>
+
+</div><!-- /main -->
+
+<script>
+/* ═══════════════════════════
+   PARTICLES
+═══════════════════════════ */
+const C = document.getElementById('canvas');
+const cx = C.getContext('2d');
+let pts = [];
+
+function resize(){C.width=innerWidth;C.height=innerHeight;}
+resize();
+window.addEventListener('resize',resize);
+
+function mkPt(){
+  return{
+    x:Math.random()*innerWidth,
+    y:Math.random()*innerHeight,
+    r:Math.random()*1.8+.4,
+    dx:Math.cos(Math.random()*Math.PI*2)*.25,
+    dy:-(Math.random()*.35+.08),
+    o:Math.random()*.45+.1,
+    p:Math.random()*Math.PI*2,
+    ps:Math.random()*.018+.01,
+    type:Math.floor(Math.random()*3)
+  };
+}
+for(let i=0;i<70;i++) pts.push(mkPt());
+
+// color sets: sage, gold, rose
+const cols=['143,170,139','201,169,110','212,165,160'];
+
+function draw(){
+  cx.clearRect(0,0,C.width,C.height);
+  pts.forEach(p=>{
+    p.p+=p.ps;
+    p.x+=p.dx;p.y+=p.dy;
+    if(p.y<-10){p.y=C.height+10;p.x=Math.random()*C.width;}
+    const a=p.o*(0.55+0.45*Math.sin(p.p));
+    const col=cols[p.type];
+    // core
+    cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    cx.fillStyle=`rgba(${col},${a})`;cx.fill();
+    // soft halo
+    const g=cx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*7);
+    g.addColorStop(0,`rgba(${col},${a*.3})`);
+    g.addColorStop(1,'transparent');
+    cx.beginPath();cx.arc(p.x,p.y,p.r*7,0,Math.PI*2);
+    cx.fillStyle=g;cx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* ═══════════════════════════
+   OPENING
+═══════════════════════════ */
+function enterSite(){
+  const op=document.getElementById('opening');
+  const main=document.getElementById('main');
+  op.classList.add('hidden');
+  setTimeout(()=>{
+    op.style.display='none';
+    main.classList.add('show');
+    revealHero();
+  },1400);
+}
+
+function revealHero(){
+  document.querySelectorAll('.hero .sr').forEach((el,i)=>{
+    setTimeout(()=>el.classList.add('show'),i*180);
+  });
+}
+
+/* ═══════════════════════════
+   SCROLL REVEAL
+═══════════════════════════ */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show');});
+},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
+
+/* ═══════════════════════════
+   VIDEO PLAYER - FULLY FIXED
+═══════════════════════════ */
+const vid=document.getElementById('theater-video');
+const placeholderDiv=document.getElementById('screen-placeholder');
+const bigPlay=document.getElementById('big-play-btn');
+const cvPlayBtn=document.getElementById('cv-play-btn');
+const ctrlFill=document.getElementById('ctrl-fill');
+const ctrlThumb=document.getElementById('ctrl-thumb');
+const cvTimeSpan=document.getElementById('cv-time');
+let vidPlaying=false;
+let vidLoaded=false;
+window.addEventListener('load', () => {
+  if(vid.src){
+    vidLoaded = true;
+    placeholderDiv.classList.add('hidden');
+  }
+});
+function updatePlayButtons(){
+  if(!vidLoaded) return;
+  const isPlaying = !vid.paused && !vid.ended;
+  vidPlaying = isPlaying;
+  bigPlay.textContent = isPlaying ? '⏸' : '▶';
+  bigPlay.classList.toggle('playing', isPlaying);
+  cvPlayBtn.textContent = isPlaying ? '⏸' : '▶';
+}
+
+function handleScreenClick(){
+  if(!vidLoaded) return;
+  toggleVideo(null);
+}
+
+function openFileDialog(e){
+  if(e) e.stopPropagation();
+  document.getElementById('video-file-input').click();
+}
+
+function loadVideoFile(e){
+  const file=e.target.files[0];
+  if(!file) return;
+  const url=URL.createObjectURL(file);
+  loadVideoFromUrl(url);
+}
+
+function loadVideoFromUrl(url){
+  vid.src=url;
+  vid.style.display='block';
+  if(placeholderDiv){
+    placeholderDiv.classList.add('hidden');
+  }
+  vidLoaded=true;
+  vid.load();
+  // autoplay setelah load agar user langsung bisa interaksi
+  vid.play().then(()=>{
+    updatePlayButtons();
+  }).catch(err=>{
+    console.log("autoplay blocked, waiting for user click", err);
+    updatePlayButtons();
+  });
+}
+
+function toggleVideo(e){
+  if(e && e.stopPropagation) e.stopPropagation();
+  if(!vidLoaded) return;
+  if(vid.paused || vid.ended){
+    vid.play().then(()=>{
+      updatePlayButtons();
+    }).catch(e=>console.log("play error", e));
+  } else {
+    vid.pause();
+    updatePlayButtons();
+  }
+}
+
+function formatTime(secs){
+  if(isNaN(secs)) return "0:00";
+  const m=Math.floor(secs/60);
+  const s=Math.floor(secs%60);
+  return m+":"+(s<10?"0"+s:s);
+}
+
+vid.addEventListener('timeupdate',()=>{
+  if(!vid.duration || isNaN(vid.duration)) return;
+  const pct=(vid.currentTime/vid.duration)*100;
+  ctrlFill.style.width=pct+'%';
+  ctrlThumb.style.right=(100-pct)+'%';
+  cvTimeSpan.textContent=formatTime(vid.currentTime)+" / "+formatTime(vid.duration);
+});
+
+vid.addEventListener('loadedmetadata',()=>{
+  cvTimeSpan.textContent='0:00 / '+formatTime(vid.duration);
+  updatePlayButtons();
+});
+
+vid.addEventListener('play', () => { vidPlaying=true; updatePlayButtons(); });
+vid.addEventListener('pause', () => { vidPlaying=false; updatePlayButtons(); });
+vid.addEventListener('ended', () => { vidPlaying=false; updatePlayButtons(); ctrlFill.style.width='0%'; ctrlThumb.style.right='100%';});
+
+function seekVideo(e){
+  e.stopPropagation();
+  if(!vid.duration) return;
+  const rect=document.getElementById('ctrl-progress').getBoundingClientRect();
+  let pos=(e.clientX-rect.left)/rect.width;
+  pos=Math.min(Math.max(pos,0),1);
+  vid.currentTime=pos*vid.duration;
+}
+
+function toggleMute(e){
+  e.stopPropagation();
+  vid.muted=!vid.muted;
+  e.currentTarget.textContent=vid.muted?'🔇':'🔊';
+}
+
+function setVolume(v){ vid.volume=v; }
+
+function goFullscreen(e){
+  e.stopPropagation();
+  const screenDiv=document.getElementById('screen');
+  if(screenDiv.requestFullscreen) screenDiv.requestFullscreen();
+  else if(screenDiv.webkitRequestFullscreen) screenDiv.webkitRequestFullscreen();
+}
+
+function stopProp(e){ e.stopPropagation(); }
+
+/* ═══════════════════════════
+   AUDIO PLAYER
+═══════════════════════════ */
+const aud=document.getElementById('audio-el');
+const apPlay=document.getElementById('ap-play-btn');
+const apFill=document.getElementById('ap-fill');
+const apProg=document.getElementById('ap-prog');
+const aCur=document.getElementById('a-cur');
+const aTot=document.getElementById('a-tot');
+const vizEl=document.getElementById('viz');
+
+// build bars
+const BARS=36;
+const vbars=[];
+for(let i=0;i<BARS;i++){
+  const b=document.createElement('div');
+  b.className='vb';
+  vizEl.appendChild(b);
+  vbars.push(b);
+}
+const phases=Array.from({length:BARS},()=>Math.random()*Math.PI*2);
+const speeds=Array.from({length:BARS},()=>0.035+Math.random()*.055);
+let audPlaying=false;
+
+function animViz(){
+  vbars.forEach((b,i)=>{
+    phases[i]+=speeds[i];
+    const h=audPlaying
+      ? 6+40*Math.abs(Math.sin(phases[i]))
+      : 3+4*Math.abs(Math.sin(phases[i]*.35));
+    b.style.height=h+'px';
+    b.classList.toggle('on',audPlaying);
+  });
+  requestAnimationFrame(animViz);
+}
+animViz();
+
+function loadAudioFile(e){
+  const f=e.target.files[0];
+  if(!f)return;
+  aud.src=URL.createObjectURL(f);
+  aud.load();
+  aud.play().then(()=>{
+    audPlaying=true;
+    apPlay.textContent='⏸';
+  }).catch(()=>{});
+}
+
+function toggleAudio(){
+
+  if(!aud.src){
+    alert("Audio belum tersedia.");
+    return;
+  }
+
+  if(aud.paused){
+    aud.play();
+    audPlaying = true;
+    apPlay.textContent = '⏸';
+  } else {
+    aud.pause();
+    audPlaying = false;
+    apPlay.textContent = '▶';
+  }
+}
+
+aud.addEventListener('timeupdate',()=>{
+  if(!aud.duration)return;
+  apFill.style.width=(aud.currentTime/aud.duration*100)+'%';
+  aCur.textContent=formatTime(aud.currentTime);
+});
+aud.addEventListener('loadedmetadata',()=>{aTot.textContent=formatTime(aud.duration);});
+aud.addEventListener('ended',()=>{audPlaying=false;apPlay.textContent='▶';apFill.style.width='0%';});
+
+function seekAudio(e){
+  if(!aud.duration)return;
+  const r=apProg.getBoundingClientRect();
+  aud.currentTime=((e.clientX-r.left)/r.width)*aud.duration;
+}
+function audioSkip(s){aud.currentTime=Math.max(0,Math.min(aud.duration||0,aud.currentTime+s));}
+</script>
+</body>
+</html>
